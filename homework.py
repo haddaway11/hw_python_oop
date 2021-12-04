@@ -126,7 +126,7 @@ class Swimming(Training):
         """Получить количество затраченных калорий."""
         cf = 1.1
         c2 = 2
-        spentcal = (self.get_mean_speed() + cf) * c2 * self.weight sdff
+        spentcal = (self.get_mean_speed() + cf) * c2 * self.weight
         return spentcal
 
     def get_distance(self) -> float:
