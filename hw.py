@@ -92,8 +92,6 @@ class SportsWalking(Training):
 class Swimming(Training):
     """Тренировка: плавание."""
     TRAINING_TYPE = 'SWM'
-    M_IN_KM = 1000
-    LEN_STEP = 1.38
     def __init__(self,
                  action: int,      #количество совершённых действий
                  duration: float,  #prodolzitelnost
@@ -119,9 +117,11 @@ class Swimming(Training):
         return spentcal
 
     def get_distance(self) -> float:
-        LEN_STEP = 1.38
-        """Получить дистанцию в км."""        
-        distance = self.action * self.LEN_STEP / self.M_IN_KM
+
+        """Получить дистанцию в км."""
+        M_IN_KM = 1000
+        LEN_STEP = 1.38              
+        distance = self.action * LEN_STEP / M_IN_KM
         return distance
 
 def read_package(workout_type: str, data: list) -> Training:
