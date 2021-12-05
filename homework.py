@@ -60,9 +60,9 @@ class Training:
 class Running(Training):
     """Тренировка: бег."""
     TRAINING_TYPE: str = 'RUN'
-    coeff_calorie_1: int = 18
-    coeff_calorie_2: int = 20
-    coeff_calorie_3: int = 60
+    coeff_calorie_1: int = 18  # коэфициенты для подсчета калорий
+    coeff_calorie_2: int = 20  # коэфициенты для подсчета калорий
+    coeff_calorie_3: int = 60  # коэфициенты для подсчета калорий
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
@@ -77,7 +77,7 @@ class SportsWalking(Training):
     TRAINING_TYPE: str = 'WLK'
     coeff_calorie_3: float = 0.035  # коэфициенты для подсчета калорий
     coeff_calorie_4: float = 0.029  # коэфициенты для подсчета калорий
-    coeff_min: int = 60
+    coeff_min: int = 60  # коэфициенты для подсчета калорий
 
     def __init__(self,
                  action: int,      # количество совершённых действий
