@@ -20,9 +20,16 @@ class InfoMessage:
 
 class Training:
     """Базовый класс тренировки."""
-    TRAINING_TYPE: str = ''
     M_IN_KM: int = 1000
     LEN_STEP: float = 0.65
+    COEFF_CALORIE_1: int = 18  # коэфициенты для подсчета калорий
+    COEFF_CALORIE_2: int = 20  # коэфициенты для подсчета калорий
+    COEFF_CALORIE_3: int = 60  # коэфициенты для подсчета калорий
+    COEFF_CALORIE_3: float = 0.035  # коэфициенты для подсчета калорий
+    COEFF_CALORIE_4: float = 0.029  # коэфициенты для подсчета калорий
+    HOUR_IN_MIN: int = 60  # коэфициенты для подсчета калорий
+    CALORIE_RATIO: float = 1.1
+    CALORIE_RATIO_2: int = 2
 
     def __init__(self,
                  action: int,  # количество
@@ -59,25 +66,18 @@ class Training:
 
 class Running(Training):
     """Тренировка: бег."""
-    TRAINING_TYPE: str = 'RUN'
-    coeff_calorie_1: int = 18  # коэфициенты для подсчета калорий
-    coeff_calorie_2: int = 20  # коэфициенты для подсчета калорий
-    coeff_calorie_3: int = 60  # коэфициенты для подсчета калорий
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
-        calories = ((self.coeff_calorie_1 * self.get_mean_speed()
-                    - self.coeff_calorie_2) * self.weight
-                    / self.M_IN_KM * self.duration * self.coeff_calorie_3)
+        calories = (         # у нас в задании в примере COEFF_CALORIE
+            (self.COEFF_CALORIE_1 * self.get_mean_speed()
+             - self.COEFF_CALORIE_2) * self.weight
+            / self.M_IN_KM * self.duration * self.COEFF_CALORIE_3)
         return calories
 
 
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
-    TRAINING_TYPE: str = 'WLK'
-    coeff_calorie_3: float = 0.035  # коэфициенты для подсчета калорий
-    coeff_calorie_4: float = 0.029  # коэфициенты для подсчета калорий
-    coeff_min: int = 60  # коэфициенты для подсчета калорий
 
     def __init__(self,
                  action: int,      # количество совершённых действий
@@ -92,20 +92,16 @@ class SportsWalking(Training):
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
-        calorie = ((self.coeff_calorie_3 * self.weight
-                   + self.get_mean_speed()**2 // self.height
-                   * self.coeff_calorie_4 * self.weight) * self.duration
-                   * self.coeff_min)
+        calorie = (
+            (self.COEFF_CALORIE_3 * self.weight
+             + self.get_mean_speed()**2 // self.height * self.COEFF_CALORIE_4
+             * self.weight) * self.duration * self.HOUR_IN_MIN)
         return calorie
 
 
 class Swimming(Training):
     """Тренировка: плавание."""
-    TRAINING_TYPE: str = 'SWM'
-    M_IN_KM: int = 1000
-    LEN_STEP: float = 1.38
-    calorie_ratio: float = 1.1
-    calorie_ratio2: int = 2
+    LEN_STEP: float = 1.38  # переопределяем для класса плавание
 
     def __init__(self,
                  action: int,      # количество совершённых действий
@@ -122,13 +118,14 @@ class Swimming(Training):
 
     def get_mean_speed(self) -> float:
         """Получить среднюю скорость движения."""
-        return (self.length_pool * self.count_pool / self.M_IN_KM
-                / self.duration)
+        return (
+            self.length_pool * self.count_pool / self.M_IN_KM / self.duration)
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
-        calori = ((self.get_mean_speed() + self.calorie_ratio)
-                  * self.calorie_ratio2 * self.weight)
+        calori = (
+            (self.get_mean_speed() + self.CALORIE_RATIO) * self.CALORIE_RATIO_2
+            * self.weight)
         return calori
 
     def get_distance(self) -> float:
@@ -140,7 +137,10 @@ class Swimming(Training):
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
     type = {'SWM': Swimming, 'RUN': Running, 'WLK': SportsWalking}
-    return type[workout_type](*data)
+    if workout_type in type.keys():
+        return type[workout_type](*data)
+    else:
+        print("Ошибка ключ не совпадает")
 
 
 def main(training: Training) -> None:
@@ -151,8 +151,8 @@ def main(training: Training) -> None:
 
 if __name__ == '__main__':
     packages = [
-        ('SWM', [720, 1, 80, 25, 40]),
-        ('RUN', [15000, 1, 75]),
+        ('SWM', [720, 1, 80, 25, 40]),  # Это часть задания
+        ('RUN', [15000, 1, 75]),        # Мне его изменить надо?
         ('WLK', [9000, 1, 75, 180]),
     ]
 
