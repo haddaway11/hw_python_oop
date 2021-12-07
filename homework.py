@@ -24,7 +24,6 @@ class Training:
     LEN_STEP: float = 0.65
     COEFF_CALORIE_1: int = 18  # коэфициенты для подсчета калорий
     COEFF_CALORIE_2: int = 20  # коэфициенты для подсчета калорий
-    COEFF_CALORIE_3: int = 60  # коэфициенты для подсчета калорий
     COEFF_CALORIE_3: float = 0.035  # коэфициенты для подсчета калорий
     COEFF_CALORIE_4: float = 0.029  # коэфициенты для подсчета калорий
     HOUR_IN_MIN: int = 60  # коэфициенты для подсчета калорий
@@ -72,7 +71,7 @@ class Running(Training):
         calories = (         # у нас в задании в примере COEFF_CALORIE
             (self.COEFF_CALORIE_1 * self.get_mean_speed()
              - self.COEFF_CALORIE_2) * self.weight
-            / self.M_IN_KM * self.duration * self.COEFF_CALORIE_3)
+            / self.M_IN_KM * self.duration * self.HOUR_IN_MIN)
         return calories
 
 
