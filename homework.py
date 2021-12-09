@@ -22,13 +22,7 @@ class Training:
     """Базовый класс тренировки."""
     M_IN_KM: int = 1000
     LEN_STEP: float = 0.65
-    COEFF_CALORIE_1: int = 18  # коэфициенты для подсчета калорий
-    COEFF_CALORIE_2: int = 20  # коэфициенты для подсчета калорий
-    COEFF_CALORIE_3: float = 0.035  # коэфициенты для подсчета калорий
-    COEFF_CALORIE_4: float = 0.029  # коэфициенты для подсчета калорий
     HOUR_IN_MIN: int = 60  # коэфициенты для подсчета калорий
-    CALORIE_RATIO: float = 1.1
-    CALORIE_RATIO_2: int = 2
 
     def __init__(self,
                  action: int,  # количество
@@ -65,6 +59,8 @@ class Training:
 
 class Running(Training):
     """Тренировка: бег."""
+    COEFF_CALORIE_1: int = 18  # коэфициенты для подсчета калорий
+    COEFF_CALORIE_2: int = 20  # коэфициенты для подсчета калорий
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
@@ -78,6 +74,8 @@ class Running(Training):
 
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
+    COEFF_CALORIE_3: float = 0.035  # коэфициенты для подсчета калорий
+    COEFF_CALORIE_4: float = 0.029  # коэфициенты для подсчета калорий
 
     def __init__(self,
                  action: int,      # количество совершённых действий
@@ -103,6 +101,8 @@ class SportsWalking(Training):
 class Swimming(Training):
     """Тренировка: плавание."""
     LEN_STEP: float = 1.38  # переопределяем для класса плавание
+    CALORIE_RATIO: float = 1.1
+    CALORIE_RATIO_2: int = 2
 
     def __init__(self,
                  action: int,      # количество совершённых действий
