@@ -71,7 +71,8 @@ class Running(Training):
         calories = (         # у нас в задании в примере COEFF_CALORIE
             (self.COEFF_CALORIE_1 * self.get_mean_speed()
              - self.COEFF_CALORIE_2) * self.weight
-            / self.M_IN_KM * self.duration * self.HOUR_IN_MIN)
+            / self.M_IN_KM * self.duration * self.HOUR_IN_MIN
+        )
         return calories
 
 
@@ -94,7 +95,8 @@ class SportsWalking(Training):
         calorie = (
             (self.COEFF_CALORIE_3 * self.weight
              + self.get_mean_speed()**2 // self.height * self.COEFF_CALORIE_4
-             * self.weight) * self.duration * self.HOUR_IN_MIN)
+             * self.weight) * self.duration * self.HOUR_IN_MIN
+        )
         return calorie
 
 
@@ -118,13 +120,15 @@ class Swimming(Training):
     def get_mean_speed(self) -> float:
         """Получить среднюю скорость движения."""
         return (
-            self.length_pool * self.count_pool / self.M_IN_KM / self.duration)
+            self.length_pool * self.count_pool / self.M_IN_KM / self.duration
+        )
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
         calori = (
             (self.get_mean_speed() + self.CALORIE_RATIO) * self.CALORIE_RATIO_2
-            * self.weight)
+            * self.weight
+        )
         return calori
 
     def get_distance(self) -> float:
@@ -135,23 +139,23 @@ class Swimming(Training):
 
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
-    type = {'SWM': Swimming, 'RUN': Running, 'WLK': SportsWalking}
-    if workout_type in type.keys():
-        return type[workout_type](*data)
+    types = {'SWM': Swimming, 'RUN': Running, 'WLK': SportsWalking}
+    if workout_type in types.keys():
+        return types[workout_type](*data)
     else:
         print("Ошибка ключ не совпадает")
 
 
 def main(training: Training) -> None:
     """Главная функция."""
-    info = training.show_training_info()
+    info: InfoMessage = training.show_training_info()
     print(info.get_message())
 
 
 if __name__ == '__main__':
     packages = [
-        ('SWM', [720, 1, 80, 25, 40]),  # Это часть задания
-        ('RUN', [15000, 1, 75]),        # Мне его изменить надо?
+        ('SWM', [720, 1, 80, 25, 40]),
+        ('RUN', [15000, 1, 75]),
         ('WLK', [9000, 1, 75, 180]),
     ]
 
