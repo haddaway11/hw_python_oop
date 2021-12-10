@@ -139,11 +139,10 @@ class Swimming(Training):
 
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
-    types = {'SWM': Swimming, 'RUN': Running, 'WLK': SportsWalking}
-    if workout_type in types.keys():
-        return types[workout_type](*data)
-    else:
-        print("Ошибка ключ не совпадает")
+    training_types = {'SWM': Swimming, 'RUN': Running, 'WLK': SportsWalking}
+    if training_types.get(workout_type, None) is None:
+        raise ValueError('ошибка')
+    return training_types[workout_type](*data)
 
 
 def main(training: Training) -> None:
